@@ -10,14 +10,27 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
-const routerBase = import.meta.env.BASE_URL;
+
+const getRouterBase = () => {
+  const configuredBase = import.meta.env.BASE_URL || "/";
+
+  if (configuredBase === "/") {
+    return "/";
+  }
+
+  if (typeof window !== "undefined" && !window.location.pathname.startsWith(configuredBase)) {
+    return "/";
+  }
+
+  return configuredBase;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename={routerBase}>
+      <BrowserRouter basename={getRouterBase()}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
