@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // GitHub Pages serves project sites from /<repo-name>/ by default.
+  // Override with VITE_BASE_PATH if you deploy elsewhere.
+  base: mode === "production" ? process.env.VITE_BASE_PATH ?? "/boundless-skies/" : "/",
   server: {
     host: "::",
     port: 8080,
